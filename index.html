@@ -17,21 +17,22 @@
             </div>
 
             <div class="product-info">
-                <h1>{{product}}</h1>
+                <h1>{{title}}</h1>
                 <p>{{description}}</p>
                 <p v-show="inventory > 0">In Stock</p>
-                <p v-show="onSale">On Sale!</p>
+                <p v-show="inventory == 0">Out of Stock</p>
+                <p :class="{struckThrough: !onSale}">On Sale!</p>
 
                 <ul>
                     <li v-for="detail in details">{{detail}}</li>
                 </ul>
 
                 <h4>Colors:</h4>
-                <div v-for="variant in variants" 
+                <div v-for="(variant, index) in variants" 
                     :key="variant.variantId"
                     class="color-box"
                     :style="{ backgroundColor: variant.variantColor }"
-                    @mouseover="updateProduct(variant.variantImage)">
+                    @mouseover="updateProduct(index), toggleOnSale()">
                 </div>
 
                 <h4>Available sizes:</h4>
